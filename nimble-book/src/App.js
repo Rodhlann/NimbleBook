@@ -29,7 +29,7 @@ class NavBar extends Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#"><img id="logo" src="http://www.bruce-campbell.com/images/order-bam.png" alt="logo" /></a>
+            Nimble Book
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
