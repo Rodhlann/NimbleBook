@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ControlLabel, Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Grid, Row, Col } from 'react-bootstrap';
+import { Panel, ControlLabel, Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Grid, Row, Col } from 'react-bootstrap';
 
 class App extends Component {
   render() {
@@ -9,11 +9,13 @@ class App extends Component {
           <NavBar/>
         </Row>
         <Row className="show-grid">
-          <Search/>
-        </Row>
-        <Row className="show-grid">
-          <Menu/>
-          <SearchContent/>
+          <Col xs={2}>
+            <Menu/>
+          </Col>
+          <Col xs={8}>
+            <Search/>
+            <SearchContent/>
+          </Col>
         </Row>
         <Row className="show-grid">
           <AdView/>
@@ -63,13 +65,11 @@ class NavBar extends Component {
 class Search extends Component {
   render() {
     return (
-      <Col xs={8} mdPush={2}>
-        <form>
-          <FormGroup controlId="search" >
-            <FormControl type="text" placeholder="Search..."/>
-          </FormGroup>
-        </form>
-      </Col>
+      <form>
+        <FormGroup controlId="search" >
+          <FormControl type="text" placeholder="Search..."/>
+        </FormGroup>
+      </form>
     );
   }
 }
@@ -77,8 +77,8 @@ class Search extends Component {
 class Menu extends Component {
   render() {
     return (
-      <Col xs={2}>
-        <ControlLabel>Filter Results:</ControlLabel>
+      <div>
+        <ControlLabel>Filter Results: </ControlLabel>
         <Nav controlId="menu" bsStyle="pills" stacked>
           <NavItem eventKey={1}>Filter Option</NavItem>
           <NavItem eventKey={2}>Filter Option</NavItem>
@@ -87,7 +87,7 @@ class Menu extends Component {
           <NavItem eventKey={5}>Filter Option</NavItem>
           <NavItem eventKey={6}>Filter Option</NavItem>
         </Nav>
-      </Col>
+      </div>
     );
   }
 }
@@ -95,9 +95,7 @@ class Menu extends Component {
 class SearchContent extends Component {
   render() {
     return (
-      <Col xs={8}>
         <SearchResult/>
-      </Col>
     );
   }
 }
@@ -105,7 +103,26 @@ class SearchContent extends Component {
 class SearchResult extends Component {
   render() {
     return (
-      <div></div>
+      <Panel>
+        <Col xs={12}>
+          <Col xs={12} md={4}>
+            <label>Title</label>
+            <p>Harry Potter and The Biggest Boomstick</p>
+          </Col>
+          <Col xs={12} md={4}>
+            <label>Author</label>
+            <p>J.K.Rowling</p>
+          </Col>
+          <Col xs={12} md={4}>
+            <label>Genre</label>
+            <p>Fantasy, Magic, Teen</p>
+          </Col>
+          <Col xs={12}>
+            <label>Description</label>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.Aenean commodo ligula eget dolor.Aenean massa.Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.Nulla consequat massa quis enim.</p>
+          </Col>
+        </Col>
+      </Panel>
     );
   }
 }
