@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Panel, ControlLabel, Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Grid, Row, Col } from 'react-bootstrap';
+import { Checkbox, Panel, PanelGroup, ControlLabel, Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Grid, Row, Col } from 'react-bootstrap';
 
 class App extends Component {
   render() {
@@ -10,7 +10,7 @@ class App extends Component {
         </Row>
         <Row className="show-grid">
           <Col xs={2}>
-            <Menu/>
+            <Filter/>
           </Col>
           <Col xs={8}>
             <Search/>
@@ -36,11 +36,11 @@ class NavBar extends Component {
         </Navbar.Header>
         <Nav>
           <NavItem eventKey={1} href="#"></NavItem>
-          <NavItem eventKey={2} href="#">Link</NavItem>
-          <NavItem eventKey={3} href="#">Link</NavItem>
+          <NavItem eventKey={2} href="#">About</NavItem>
+          <NavItem eventKey={3} href="#">Donate</NavItem>
         </Nav>
         <Nav pullRight>
-          <NavDropdown eventKey={4} title="Account" id="account-dropdown" justified>
+          <NavDropdown eventKey={4} title="Account" id="account-dropdown">
             <MenuItem eventKey={4.1}>Account</MenuItem>
             <MenuItem eventKey={4.2}>Settings</MenuItem>
             <MenuItem divider />
@@ -74,20 +74,56 @@ class Search extends Component {
   }
 }
 
-class Menu extends Component {
+class Filter extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      open: true
+    };
+  }
+
   render() {
     return (
       <div>
         <ControlLabel>Filter Results: </ControlLabel>
-        <Nav controlId="menu" bsStyle="pills" stacked>
-          <NavItem eventKey={1}>Filter Option</NavItem>
-          <NavItem eventKey={2}>Filter Option</NavItem>
-          <NavItem eventKey={3}>Filter Option</NavItem>
-          <NavItem eventKey={4}>Filter Option</NavItem>
-          <NavItem eventKey={5}>Filter Option</NavItem>
-          <NavItem eventKey={6}>Filter Option</NavItem>
-        </Nav>
+        <FilterOption/>
       </div>
+    );
+  }
+}
+
+class FilterOption extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      open: true
+    };
+  }
+
+  render() {
+    return (
+      <Panel collapsible expanded={this.state.open} header="Genre" eventKey="1"
+        onClick={ (e) => {
+          // Filter panel hack, so the user can expand the panel view, but also select the given options - Pepper (8/4/2017)
+          if (e.target.classList.contains("panel-title") || e.target.classList.contains("panel-heading") || e.target.nodeName === "A") {
+            this.setState({ open: !this.state.open })
+          }
+        }
+        }>
+        <form>
+          <FormGroup>
+            <Checkbox>
+              Horror
+            </Checkbox>
+            <Checkbox>
+              Fantasy
+            </Checkbox>
+            <Checkbox>
+              Scifi
+            </Checkbox>
+          </FormGroup>
+        </form>
+      </Panel>
     );
   }
 }
@@ -95,7 +131,7 @@ class Menu extends Component {
 class SearchContent extends Component {
   render() {
     return (
-        <SearchResult/>
+      <SearchResult/>
     );
   }
 }
