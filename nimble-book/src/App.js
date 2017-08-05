@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-bootstrap'; 
-//import logo from './logo.svg';
-import './App.css';
+import { FormGroup, FormControl, Grid, Row, Col } from 'react-bootstrap';
 
 class App extends Component {
   render() {
@@ -11,10 +9,13 @@ class App extends Component {
           <Logo/>
           <Search/>
         </Row>
-        <Menu/>
-        <SearchResult/>
-        <BookView/>
-        <AdView/>
+        <Row className="show-grid">
+          <Menu/>
+          <SearchContent/>
+        </Row>
+        <Row className="show-grid">
+          <AdView/>
+        </Row>
       </Grid>
     );
   }
@@ -23,18 +24,28 @@ class App extends Component {
 class Logo extends Component {
   render() {
     return (
-     <Col xs={12} md={4}>
-        <img src="http://www.bruce-campbell.com/images/order-bam.png" alt="logo" />
+      <Col xs={2}>
+        <img id="Logo" src="http://www.bruce-campbell.com/images/order-bam.png" alt="logo" />
       </Col>
     );
   }
 }
 
 class Search extends Component {
+  getInitialState() {
+    return {
+      value: ''
+    };
+  }
+
   render() {
     return (
-      <Col xs={12} md={8}>
-        <input type="text" placeholder="Search..."></input>
+      <Col xs={8}>
+        <form>
+          <FormGroup controlId="search" >
+            <FormControl type="text" placeholder="Search..."/>
+          </FormGroup>
+        </form>
       </Col>
     );
   }
@@ -43,8 +54,18 @@ class Search extends Component {
 class Menu extends Component {
   render() {
     return (
-      <div></div>
+      <Col xs={2}>
+        <img id="Logo" src="http://www.bruce-campbell.com/images/order-bam.png" alt="logo" />
+      </Col>
     );
+  }
+}
+
+class SearchContent extends Component {
+  render() {
+    <Col xs={8}>
+      <SearchResult/>
+    </Col>
   }
 }
 
