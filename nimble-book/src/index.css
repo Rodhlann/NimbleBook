@@ -13,11 +13,21 @@ img {
   max-height:100%;
 }
 
-#Logo { 
+#menu { 
+  padding-left: 5px; 
+}
+
+/*.menu-option { 
+  border: 1px solid black;
+  margin: 5px;
+  cursor: pointer; 
+}*/
+
+#logo { 
   width: 125px;
   height: 50px;  
 }
 
-#search { 
+/*#search { 
   margin-top: 10px; 
-}
+}*/
