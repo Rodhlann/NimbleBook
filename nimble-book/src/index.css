@@ -4,9 +4,9 @@ body {
   font-family: sans-serif;
 }
 
-* {
+/** {
   border: 1px solid black; 
-}
+}*/
 
 img { 
   max-width:100%;
@@ -16,4 +16,8 @@ img {
 #Logo { 
   width: 125px;
   height: 50px;  
+}
+
+#search { 
+  margin-top: 10px; 
 }
