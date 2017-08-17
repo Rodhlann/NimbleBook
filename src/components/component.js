@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Checkbox, Panel, PanelGroup, ControlLabel, Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Grid, Row, Col } from 'react-bootstrap';
+import { Button, Checkbox, Panel, PanelGroup, ControlLabel, Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Grid, Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import {MockData} from '../data/mock_data';
@@ -117,15 +117,32 @@ class Search extends Component {
       options: [],
     }
     this.inputChange = this.getSearchResults.bind(this);
+    this.setSearchFieldValue = this.setSearchValue.bind(this); 
+    this.initSearch = this.initiateSearchByValue.bind(this); 
+  }
+
+  initiateSearchByValue() { 
+    var input = this.state.value.label; 
+    fetch('https://www.googleapis.com/books/v1/volumes?q=' + input + '&projection=lite&maxResults=10&key=' + config.KEY)
+      .then((result) => result.json())
+      .then((resultJson) => {
+        this.props.onRecieveSearchResult(resultJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  setSearchValue(input) { 
+    this.setState({
+      value: input
+    }); 
   }
 
   getSearchResults(input) {
     input = input.label ? input.label : input;
-    this.setState({
-      value: input,
-    });
     //TODO: Create query builder to add more search functionality (title/author/genre/etc.)
-    fetch('https://www.googleapis.com/books/v1/volumes?q=' + input + '&projection=lite&maxResults=10&key=' + config.KEY)
+    fetch('https://www.googleapis.com/books/v1/volumes?q=' + input + '&maxResults=10&key=' + config.KEY + '&fields=kind,items(id, volumeInfo(title))')
       .then((result) => result.json())
       .then((resultJson) => {
         var resultOptions = [];
@@ -136,9 +153,9 @@ class Search extends Component {
           });
         }
         this.setState({
+          value: input, 
           options: resultOptions
         });
-        this.props.onRecieveSearchResult(resultJson);
       })
       .catch((error) => {
         console.error(error);
@@ -148,14 +165,24 @@ class Search extends Component {
   render() {
     return (
       //TODO: Selection value isn't being updated properly. Maybe remove? Might replace select library with simple search input 
-      <Select
-        name="search"
-        placeholder="Search..."
-        value={this.state.value}
-        options={this.state.options}
-        onChange={this.inputChange}
-        onInputChange={this.inputChange}
-        />
+      <Row>
+        <Col xs={11}>
+          <Select
+            name="search"
+            placeholder="Search..."
+            value={this.state.value}
+            options={this.state.options}
+            onChange={this.setSearchFieldValue}
+            onInputChange={this.inputChange}
+            />
+          </Col> 
+          <Col xs={1} bsClass="no-padding">
+            <Button 
+              onClick={this.initSearch}>
+              Search
+            </Button> 
+          </Col> 
+        </Row> 
     );
   }
 }
